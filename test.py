@@ -1,17 +1,50 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import tkinter
-from  tkinter  import ttk
+# import tkinter as tk
+# from tkinter.ttk import *
+# from tkinter import ttk
 
-def go(*args):   #处理事件，*args表示可变参数
-    print(comboxlist.get()) #打印选中的值
+# window = tk.Tk()
+# boldStyle = ttk.Style ()
+# boldStyle.configure("Bold.TButton", font = ('Georgia','12'))
+# boldButton = ttk.Button(window, text = "Download", style = "Bold.TButton")
+# boldButton.place(x=0,y=0)
+# window.mainloop()
 
-win=tkinter.Tk() #构造窗体
-comvalue=tkinter.StringVar()#窗体自带的文本，新建一个值
-comboxlist=ttk.Combobox(win,textvariable=comvalue) #初始化
-comboxlist["values"]=("1","2","3","4")
-comboxlist.current(0)  #选择第一个
-comboxlist.bind("<<ComboboxSelected>>",go)  #绑定事件,(下拉列表框被选中时，绑定go()函数)
-comboxlist.pack()
+import tkinter as tk
+from tkinter.ttk import *
 
-win.mainloop() #进入消息循环
+class App():
+  def __init__(self, master):
+    frame = Frame(master)
+    frame.pack()
+
+    master.title("Just my example")
+    self.label = Label(frame, text="Type very long text:")
+
+    self.entry = Entry(frame)
+
+    self.button = Button(frame,
+                         text="Quit", width=15,
+                         command=frame.quit)
+
+
+    self.slogan = Button(frame,
+                         text="Hello", width=15,
+                         command=self.write_slogan)
+
+    self.label.grid(row=0, column=0)
+    self.entry.grid(row=0, column=1)
+    self.slogan.grid(row=1, column=0, sticky='e')
+    self.button.grid(row=1, column=1, sticky='e')
+
+  def write_slogan(self):
+    print("Tkinter is easy to use!")
+
+root = tk.Tk()
+root.style = Style()
+#('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
+root.style.theme_use("default")
+
+app = App(root)
+root.mainloop()
