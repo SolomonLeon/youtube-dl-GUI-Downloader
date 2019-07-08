@@ -8,6 +8,7 @@ A youtube-dl GUI tool build with tkinter, which is easy to use.
 ###### Windows:
 
 Please turn to the [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases).
+If you didn't install youtube-dl into your computer yet, please use "Yinstaller.exe".
 
 ###### Mac OS and Linux desktop:
 
@@ -32,3 +33,9 @@ pip install pyperclip
 ```
 
 If you have any idea, please send me by pull request, or issues. Enjoy your coding trip!
+
+# Notes
+If you failed with error "10061" or "10060", please check the "proxy setting" in "Menu".
+you can use command "start inetcpl.cpl" (windows) to see your system proxy setting.
+
+I don't provide any proxy service now.
