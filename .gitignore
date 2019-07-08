@@ -2,6 +2,8 @@
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+*.exe
+*.bat
 
 # Python:
 *.py[cod]
@@ -13,5 +15,5 @@ dist
 build
 
 #Mine
-exefiles
+setting.file
 test.py

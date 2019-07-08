@@ -1,8 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Author: Leon Zou
 import tkinter as tk
 import tkinter.messagebox
-import os, threading
+import os,ast #, threading
 from tkinter import filedialog
-from gui.user import *
+from gui.user import readSetting,setDefault,setSave
 
 def settingWindow():
     settingconfig = readSetting()
@@ -11,6 +14,7 @@ def settingWindow():
     setting.title("Setting")
     setting.resizable(False, False)
     setting.wm_attributes("-toolwindow",True)
+    setting.wm_attributes("-topmost",True)
     def settingInit():
         b1.config(text=settingconfig["savedir"])
         e1.insert("end", settingconfig["proxy"])
@@ -37,6 +41,7 @@ def settingWindow():
 def selectWindow(command,url):
     selectWindow = tk.Toplevel()
     selectWindow.geometry("400x300")
+    selectWindow.title("Select size to dowanload.")
 
     tk.Label(selectWindow,text="Select \nvideo size:").place(x=0)
     tk.Label(selectWindow,text="Select \naudio size:").place(x=0,rely=0.5)
@@ -48,7 +53,7 @@ def selectWindow(command,url):
     videoListbox.config(yscrollcommand=yscrollbar1.set)
 
     audioListbox = tk.Listbox(selectWindow,exportselection=False)
-    audioListbox.place(relwidth=1,x=80,y=0.5,relheight=0.5,width=-180)
+    audioListbox.place(relwidth=1,x=80,rely=0.5,relheight=0.5,width=-180)
     yscrollbar2 = tk.Scrollbar(audioListbox,orient="vertical",command=audioListbox.yview)
     yscrollbar2.pack(side=tk.RIGHT, fill=tk.Y)
     audioListbox.config(yscrollcommand=yscrollbar2.set)
@@ -89,7 +94,29 @@ def selectWindow(command,url):
 def customWindow(url):
     customWindow = tk.Toplevel()
     customWindow.geometry("520x250")
+    customWindow.title("Custom Download")
     commanddict={}
+
+    def customConfig(do,dict):
+        filetypes = [('Configfile', '.file')]
+        if do =="save":
+            file = filedialog.asksaveasfilename(parent=customWindow,initialdir=os.getcwd(),title="Please select a file name (*.file) for saving:",filetypes=filetypes)
+            with open(file, "w")as f:
+                f.write(str(dict))
+        else:
+            tkinter.messagebox.showinfo(title='Be careful!', message="Don't use those Configfile that other people send to you!")
+            file = filedialog.askopenfilename(parent=customWindow,initialdir=os.getcwd(),title="Please select a file:",filetypes=filetypes)
+            with open(file,"r") as f:
+                commanddictTemp = f.read()       
+                commanddictTemp = ast.literal_eval(commanddictTemp)
+            commandlistbox.delete(0, "end")
+            for key in commanddictTemp:
+                if commanddictTemp[key] == "":
+                    line = key
+                else:
+                    line = key+" \""+commanddictTemp[key]+"\""
+                commandlistbox.insert('end', line)
+                commanddict[key]=commanddictTemp[key]
 
     def getFullcommand():
         full = ""#add all parameter together
@@ -112,7 +139,7 @@ def customWindow(url):
             if commandParameter == "":
                 line = commandOption
             else:
-                line = commandOption+" "+commandParameter
+                line = commandOption+" \""+commandParameter+"\""
             commandlistbox.insert('end', line)
         else:
             tkinter.messagebox.showwarning(title="Error",message="Option can't be empty.")
@@ -123,17 +150,23 @@ def customWindow(url):
             select = select.split(" ")[0]
             option.delete(0, "end")
             option.insert("end",select)
-            parameter.delete(0,"end")
+            try:
+                parameter.delete(0,"end")
             parameter.insert("end",commanddict[select])
+            except e:
+                pass
 
     def delete():
         if commandlistbox.curselection():
-            select = commandlistbox.get(commandlistbox.curselection())
-            select = select.split(" ")[0]
-            commandlistbox.delete(commandlistbox.curselection())
-            option.delete(0, "end")
-            parameter.delete(0,"end")
-            del commanddict[select]
+            try:
+                select = commandlistbox.get(commandlistbox.curselection())
+                select = select.split(" ")[0]
+                commandlistbox.delete(commandlistbox.curselection())
+                option.delete(0, "end")
+                parameter.delete(0,"end")
+                del commanddict[select]
+            except e:
+                pass
 
     def showcommad():
         tkinter.messagebox.showinfo(title="Full command",message=getFullcommand())
@@ -160,7 +193,9 @@ def customWindow(url):
     tk.Button(customWindow,text="Add",command=add).place(rely=1,relx=1,x=-100,y=-60,heigh=30,width=50)
     tk.Button(customWindow,text="Del",command=delete).place(rely=1,relx=1,x=-50,y=-60,heigh=30,width=50)
 
-    tk.Button(customWindow,text="?",command=help).place(rely=1,relx=1,x=-280,y=-30,heigh=30,width=30)
+    tk.Button(customWindow,text="?",command=help).place(rely=1,relx=1,x=-450,y=-30,heigh=30,width=30)
+    tk.Button(customWindow,text="Save config",command=lambda:customConfig(do="save",dict=commanddict)).place(rely=1,relx=1,x=-410,y=-30,heigh=30,width=80)
+    tk.Button(customWindow,text="Load config",command=lambda:customConfig(do="load",dict=None)).place(rely=1,relx=1,x=-330,y=-30,heigh=30,width=80)
     tk.Button(customWindow,text="Show full command",command=showcommad).place(rely=1,relx=1,x=-240,y=-30,heigh=30,width=130)
     tk.Button(customWindow,text="Download",command=startCustomdownload).place(rely=1,relx=1,x=-100,y=-30,heigh=30,width=100)
 
@@ -177,13 +212,11 @@ def commandWindow(command):#Failed in asynchronous fetch echo...I need help!!!
 #     commandWindow.title(str(title))
 #     commandWindow.wm_attributes("-toolwindow",True)
 #     platform = "windows"
-
 #     def ReTry():
 #         if platform == "windows":
 #             os.popen("taskkill /f /im cmd.exe")
 #             commandBox.delete(0,'end')
 #             runCommand(command=command)
-        
 #     def runCommand(command):
 #         commandBox.insert('end', ">>>"+command)
 #         def showEcho(command):
@@ -193,7 +226,6 @@ def commandWindow(command):#Failed in asynchronous fetch echo...I need help!!!
 #                 print(line)
 #                 # commandBox.insert('end', line)
 #         threading.Thread(target=showEcho, args=(command,))
-
 #     commandBox = tk.Listbox(commandWindow)
 #     commandBox.place(x=0,y=0,relwidth=1,relheight=1,width=-65)
 #     tk.Button(commandWindow,text="ReTry",command=ReTry).place(heigh=30,width=60,relx=1,x=-60,y=0)

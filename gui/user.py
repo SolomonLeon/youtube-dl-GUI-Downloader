@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#Author: Leon Zou
 import os, ast
+
 def openFiledir():
     os.system("explorer \""+readSetting()["savedir"]+"\"")
 
@@ -24,7 +26,4 @@ def setSave(dict):
     with open("setting.file", "w") as f:
         f.write(str(dict))
 def seeHelps():
-    try:
-        os.system("start help.bat")
-    except Exception as e:
-        os.system("start cmd /c \"@echo off&title Help&echo Please go to Github for help\"")
+        os.system("start help.html")

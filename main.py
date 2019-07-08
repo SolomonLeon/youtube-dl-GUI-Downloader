@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#Author: Leon Zou, e-mail: imhackerlion#outlook.com
-#If you want to help me, Please send me your codes as Pull Requests or issues.
+#Author: Leon Zou
+#If you want to help me, Please send me your codes or ideas by Pull Requests or issues.
 #I won't add Auto updatater into Beta version. Please  :-P
 import tkinter as tk
 import pyperclip
@@ -55,7 +55,7 @@ def main():
     filemenu.add_command(label='Exit', command=window.quit)
     window.config(menu=menubar)
 
-    tk.Label(window, text="Youtube url:").place(x=0,y=0,width=80, height=30)
+    tk.Label(window, text="Video url:  ").place(x=0,y=0,width=80, height=30)
     urlbox = ttk.Entry(window, show=None, font=("Arial",10))
     urlbox.place(x=80,y=0,width=290,height=30)
     ttk.Button(window, text="Paste",command=Paste).place(x=370,y=0, width=50, height=30)
