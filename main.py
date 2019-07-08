@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#Author: Leon Zou
+#Author: Leon Zou, e-mail: imhackerlion#outlook.com
 #If you want to help me, Please send me your codes as Pull Requests or issues.
 #I won't add Auto updatater into Beta version. Please  :-P
 import tkinter as tk
