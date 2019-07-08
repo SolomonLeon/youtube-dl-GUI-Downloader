@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Used: https://github.com/arcticfox1919/tkinter-tabview/blob/master/dragwindow.py
+#Author: Leon Zou
+#If you want to help me, Please send me your codes as Pull Requests or issues.
+#I won't add Auto updatater into Beta version. Please  :-P
 import tkinter as tk
-import tkinter.messagebox
+import pyperclip
 from tkinter import filedialog, ttk
-from gui.connect import *
+from gui.connect import choiseDownload
 from gui.user import *
+from gui.window import *
 
-class boot(tk.Tk):
+class boot(tk.Tk):# from: https://github.com/arcticfox1919/tkinter-tabview/blob/master/dragwindow.py
     root_x, root_y, abs_x, abs_y = 0, 0, 0, 0
     width, height = None, None
 
@@ -30,56 +33,23 @@ class boot(tk.Tk):
         self.root_x, self.root_y = event.x_root, event.y_root
         self.abs_x, self.abs_y = self.winfo_x(), self.winfo_y()
 
-def settingwindow():
-    settingconfig = readSetting()
-    setting = tk.Toplevel()
-    setting.geometry("370x83")
-    setting.title("Setting")
-    setting.resizable(False, False)
-    setting.wm_attributes("-toolwindow",True)
-    def settingInit():
-        b1.config(text=settingconfig["savedir"])
-        e1.insert('end', settingconfig["proxy"])
-    def choise():
-        savedir = filedialog.askdirectory(parent=setting,initialdir=settingconfig["savedir"],title="Please select a folder:")
-        settingconfig["savedir"]=savedir
-        b1.config(text=settingconfig["savedir"])
-    def Save():
-        settingconfig["proxy"]=e1.get()
-        if settingconfig["savedir"] != "":
-            setSave(settingconfig)
-    tk.Label(setting, text="Set directory to save file:").grid(row=0, sticky="w")
-    tk.Label(setting, text="Set proxy:").grid(row=1, sticky="w")
-    b1 = tk.Button(setting,text="Choise",command=choise,width=30)
-    e1 = tk.Entry(setting,show=None,width=31)
-    b1.grid(row=0, column=1, sticky="w")
-    e1.grid(row=1, column=1, sticky="e")
-
-    tk.Button(setting,text="Default",command=lambda:setSave(setDefault()),width=20).grid(row=2, column=0, sticky="e")
-    tk.Button(setting,text="Save",command=Save,width=19).grid(row=2, column=1, sticky="e")
-
-    settingInit()
-
 def main():
     def Paste():
-        pass
-    def checkDownload(url):
-        if "www.youtube.com" not in url:
-            tkinter.messagebox.showwarning(title='Warning: Please check your url', message='You must type in a Full youtube url!')
-        else:
-            startDownload(url)
+        urlbox.delete(0, 'end')
+        urlbox.insert("end",str(pyperclip.paste()))
     window = boot()
-    window.title("Youtube-dl GUI")
+    window.title("Youtube-dl GUI downloader")
     window.geometry("660x30")
     window.resizable(False, False)
     window.overrideredirect(True) 
     window.wm_attributes("-topmost",True)
+    # window.wm_attributes("-alpha", 0.7)
 
     menubar = tk.Menu(window)
     filemenu = tk.Menu(menubar, tearoff=0)
     menubar.add_cascade(label='Menu', menu=filemenu)
     filemenu.add_command(label='Open file dir', command=openFiledir)
-    filemenu.add_command(label='Setting', command=settingwindow)
+    filemenu.add_command(label='Setting', command=settingWindow)
     filemenu.add_command(label='Help', command=seeHelps)
     filemenu.add_separator()
     filemenu.add_command(label='Exit', command=window.quit)
@@ -90,14 +60,14 @@ def main():
     urlbox.place(x=80,y=0,width=290,height=30)
     ttk.Button(window, text="Paste",command=Paste).place(x=370,y=0, width=50, height=30)
     tk.Label(window, text="Method:").place(x=420,y=0,width=55, height=30)
-    choisework = ttk.Combobox(window,textvariable=tk.StringVar())
-    choisework["values"] = ("Default Download","Choise size","Custom")
-    choisework.current(0)
-    choisework.place(x=475,y=0,width=125, height=30)
-    ttk.Button(window, text="Go!",command=lambda:checkDownload(url=urlbox.get())).place(x=600,y=0, width=60, height=30)
+    choisemethod = ttk.Combobox(window,textvariable=tk.StringVar())
+    choisemethod["values"] = ("Default Download","Select Download","Convert to mp3","Custom Download")
+    choisemethod.current(0)
+    choisemethod.place(x=475,y=0,width=125, height=30)
+    ttk.Button(window, text="Go!",command=lambda:choiseDownload(url=urlbox.get(), method=choisemethod.get())).place(x=600,y=0, width=60, height=30)
 
     window.style = ttk.Style()
-    window.style.theme_use("clam")#Georgia
+    window.style.theme_use("clam")
     window.mainloop()
 if __name__ == "__main__":
     main()
