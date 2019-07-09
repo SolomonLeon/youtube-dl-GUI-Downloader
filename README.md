@@ -5,10 +5,12 @@ A youtube-dl GUI tool build with tkinter, which is easy to use.
 
 # Download
 
+#### Sharing is not an excuse for piracy.
+
 ###### Windows:
 
-~~Please turn to the [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases).~~ There is some strange bugs of pyinstaller...But You can still use them.See "Develop" 
-If you didn't install youtube-dl into your computer yet, please turn to [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases) and download"Yinstaller.exe".
+Please turn to the [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases).
+If you didn't install youtube-dl into your computer yet, please turn to [youtube-dl](github.com/ytdl-org/youtube-dl/releases/latest) to download "youtube-dl.exe" and turn to [FFmpeg](https://ffmpeg.zeranoe.com/builds/)to download ffmpeg.
 
 ###### Mac OS and Linux desktop:
 
@@ -36,6 +38,6 @@ If you have any idea, please send me by pull request, or issues. Enjoy your codi
 
 # Notes
 If you failed with error "10061" or "10060", please check the "proxy setting" in "Menu".
-you can use command "start inetcpl.cpl" (windows) to see your system proxy setting.
+you can use command "start inetcpl.cpl" (windows) to view your system proxy setting.
 
-I don't provide any proxy service now.
+I currently do not provide any proxy services.

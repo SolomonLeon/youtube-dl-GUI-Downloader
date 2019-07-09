@@ -42,7 +42,6 @@ def settingWindow():
     tk.Button(setting,text="Save",command=Save,width=19).grid(row=2, column=1, sticky="e")
 
     settingInit()
-    setting.mainloop()
 
 def selectWindow(command,url):
     selectWindow = tk.Toplevel()
@@ -97,7 +96,6 @@ def selectWindow(command,url):
                 videoListbox.insert('end', show)
 
     tk.Button(selectWindow,text="Submit \nand \nDownload",command=Submit).place(relx=1,x=-85,rely=0.25,relheight=0.5)
-    selectWindow.mainloop()
 
 def customWindow(url):
     customWindow = tk.Toplevel()
@@ -210,8 +208,6 @@ def customWindow(url):
     tk.Button(customWindow,text="Load config",command=lambda:customConfig(do="load",dict=None)).place(rely=1,relx=1,x=-330,y=-30,heigh=30,width=80)
     tk.Button(customWindow,text="Show full command",command=showcommad).place(rely=1,relx=1,x=-240,y=-30,heigh=30,width=130)
     tk.Button(customWindow,text="Download",command=startCustomdownload).place(rely=1,relx=1,x=-100,y=-30,heigh=30,width=100)
-
-    customWindow.mainloop()
 
 def commandWindow(command):#Failed in asynchronous fetch echo...I need help!!!
     usecmd = "start cmd /c \""+command+" & pause\""
