@@ -10,9 +10,11 @@ Desktop.ini
 *.so
 *.egg
 *.egg-info
+*.spec
 __pycache__
 dist
 build
+venv
 
 #Mine
 setting.file

@@ -43,6 +43,7 @@ def main():
     window.resizable(False, False)
     window.overrideredirect(True) 
     window.wm_attributes("-topmost",True)
+    # window.wm_iconbitmap("icon.ico")
     # window.wm_attributes("-alpha", 0.7)
 
     menubar = tk.Menu(window)
@@ -52,7 +53,7 @@ def main():
     filemenu.add_command(label='Setting', command=settingWindow)
     filemenu.add_command(label='Help', command=seeHelps)
     filemenu.add_separator()
-    filemenu.add_command(label='Exit', command=window.quit)
+    filemenu.add_command(label='Exit', command=window.quit)#Something strange happend with "window.quit"...I don't know why...
     window.config(menu=menubar)
 
     tk.Label(window, text="Video url:  ").place(x=0,y=0,width=80, height=30)

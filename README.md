@@ -7,8 +7,8 @@ A youtube-dl GUI tool build with tkinter, which is easy to use.
 
 ###### Windows:
 
-Please turn to the [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases).
-If you didn't install youtube-dl into your computer yet, please use "Yinstaller.exe".
+~~Please turn to the [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases).~~ There is some strange bugs of pyinstaller...But You can still use them.See "Develop" 
+If you didn't install youtube-dl into your computer yet, please turn to [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases) and download"Yinstaller.exe".
 
 ###### Mac OS and Linux desktop:
 
@@ -24,7 +24,7 @@ You can download my code by
 git clone git@github.com:SolomonLeon/youtube-dl-GUI-Downloader.git
 ```
 
-or use "Download ZIP" button on github page.
+or use "Download ZIP" button on the github page.
 
 Before building your code, you only need to install "pyperclip".
 

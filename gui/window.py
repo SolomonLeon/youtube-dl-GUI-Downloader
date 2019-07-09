@@ -11,21 +11,26 @@ def settingWindow():
     settingconfig = readSetting()
     setting = tk.Toplevel()
     setting.geometry("370x83")
-    setting.title("Setting")
+    setting.title("Settings")
     setting.resizable(False, False)
-    setting.wm_attributes("-toolwindow",True)
+    # setting.wm_attributes("-toolwindow",True)
     setting.wm_attributes("-topmost",True)
+    setting.wm_iconbitmap("icon.ico")
+
     def settingInit():
         b1.config(text=settingconfig["savedir"])
         e1.insert("end", settingconfig["proxy"])
+
     def choise():
         savedir = filedialog.askdirectory(parent=setting,initialdir=settingconfig["savedir"],title="Please select a folder:")
         settingconfig["savedir"]=savedir
         b1.config(text=settingconfig["savedir"])
+
     def Save():
         settingconfig["proxy"]=e1.get()
         if settingconfig["savedir"] != "":
             setSave(settingconfig)
+
     tk.Label(setting, text="Set directory to save file:").grid(row=0, sticky="w")
     tk.Label(setting, text="Set proxy:").grid(row=1, sticky="w")
     b1 = tk.Button(setting,text="Choise",command=choise,width=30)
@@ -37,11 +42,25 @@ def settingWindow():
     tk.Button(setting,text="Save",command=Save,width=19).grid(row=2, column=1, sticky="e")
 
     settingInit()
+    setting.mainloop()
 
 def selectWindow(command,url):
     selectWindow = tk.Toplevel()
     selectWindow.geometry("400x300")
     selectWindow.title("Select size to dowanload.")
+    selectWindow.wm_iconbitmap("icon.ico")
+
+    def Submit():
+        audiochoise = audioListbox.curselection()
+        videochoise = videoListbox.curselection()
+        if audiochoise and videochoise:
+            audioid = audiodict[audioListbox.get(audiochoise)]
+            videoid = videodict[videoListbox.get(videochoise)]
+            parameter = "-f \""+videoid+"x"+audioid+"\""
+            from gui.connect import getdownloadCommand
+            commandWindow(command=getdownloadCommand(url=url,method="Custom",parameter=parameter,sub=True))
+        else:
+            tkinter.messagebox.showwarning(title="Error",message="You must select something to download.")
 
     tk.Label(selectWindow,text="Select \nvideo size:").place(x=0)
     tk.Label(selectWindow,text="Select \naudio size:").place(x=0,rely=0.5)
@@ -77,24 +96,14 @@ def selectWindow(command,url):
                 videodict[show]=echo_list[0]
                 videoListbox.insert('end', show)
 
-    def Submit():
-        audiochoise = audioListbox.curselection()
-        videochoise = videoListbox.curselection()
-        if audiochoise and videochoise:
-            audioid = audiodict[audioListbox.get(audiochoise)]
-            videoid = videodict[videoListbox.get(videochoise)]
-            parameter = "-f \""+videoid+"x"+audioid+"\""
-            from gui.connect import getdownloadCommand
-            commandWindow(command=getdownloadCommand(url=url,method="Custom",parameter=parameter,sub=True))
-        else:
-            tkinter.messagebox.showwarning(title="Error",message="You must select something to download.")
-
     tk.Button(selectWindow,text="Submit \nand \nDownload",command=Submit).place(relx=1,x=-85,rely=0.25,relheight=0.5)
+    selectWindow.mainloop()
 
 def customWindow(url):
     customWindow = tk.Toplevel()
     customWindow.geometry("520x250")
     customWindow.title("Custom Download")
+    customWindow.wm_iconbitmap("icon.ico")
     commanddict={}
 
     def customConfig(do,dict):
@@ -106,17 +115,20 @@ def customWindow(url):
         else:
             tkinter.messagebox.showinfo(title='Be careful!', message="Don't use those Configfile that other people send to you!")
             file = filedialog.askopenfilename(parent=customWindow,initialdir=os.getcwd(),title="Please select a file:",filetypes=filetypes)
-            with open(file,"r") as f:
-                commanddictTemp = f.read()       
-                commanddictTemp = ast.literal_eval(commanddictTemp)
-            commandlistbox.delete(0, "end")
-            for key in commanddictTemp:
-                if commanddictTemp[key] == "":
-                    line = key
-                else:
-                    line = key+" \""+commanddictTemp[key]+"\""
-                commandlistbox.insert('end', line)
-                commanddict[key]=commanddictTemp[key]
+            try:
+                with open(file,"r") as f:
+                    commanddictTemp = f.read()       
+                    commanddictTemp = ast.literal_eval(commanddictTemp)
+                commandlistbox.delete(0, "end")
+                for key in commanddictTemp:
+                    if commanddictTemp[key] == "":
+                        line = key
+                    else:
+                        line = key+" \""+commanddictTemp[key]+"\""
+                    commandlistbox.insert('end', line)
+                    commanddict[key]=commanddictTemp[key]
+            except:
+                pass
 
     def getFullcommand():
         full = ""#add all parameter together
@@ -152,8 +164,8 @@ def customWindow(url):
             option.insert("end",select)
             try:
                 parameter.delete(0,"end")
-            parameter.insert("end",commanddict[select])
-            except e:
+                parameter.insert("end",commanddict[select])
+            except:
                 pass
 
     def delete():
@@ -165,7 +177,7 @@ def customWindow(url):
                 option.delete(0, "end")
                 parameter.delete(0,"end")
                 del commanddict[select]
-            except e:
+            except:
                 pass
 
     def showcommad():
@@ -198,6 +210,8 @@ def customWindow(url):
     tk.Button(customWindow,text="Load config",command=lambda:customConfig(do="load",dict=None)).place(rely=1,relx=1,x=-330,y=-30,heigh=30,width=80)
     tk.Button(customWindow,text="Show full command",command=showcommad).place(rely=1,relx=1,x=-240,y=-30,heigh=30,width=130)
     tk.Button(customWindow,text="Download",command=startCustomdownload).place(rely=1,relx=1,x=-100,y=-30,heigh=30,width=100)
+
+    customWindow.mainloop()
 
 def commandWindow(command):#Failed in asynchronous fetch echo...I need help!!!
     usecmd = "start cmd /c \""+command+" & pause\""

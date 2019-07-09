@@ -9,9 +9,9 @@ def openFiledir():
 def readSetting():
     try:
         with open("setting.file","r") as f:
-            setting = f.read()       
+            setting = f.read()
             setting = ast.literal_eval(setting)
-    except Exception:
+    except:
         setSave(setDefault())
         setting = setDefault()
     return setting
