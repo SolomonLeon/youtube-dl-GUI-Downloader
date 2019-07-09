@@ -10,7 +10,7 @@ A youtube-dl GUI tool build with tkinter, which is easy to use.
 ###### Windows:
 
 Please turn to the [releases](https://github.com/SolomonLeon/youtube-dl-GUI-Downloader/releases).
-If you didn't install youtube-dl into your computer yet, please turn to [youtube-dl](github.com/ytdl-org/youtube-dl/releases/latest) to download "youtube-dl.exe" and turn to [FFmpeg](https://ffmpeg.zeranoe.com/builds/)to download ffmpeg.
+If you didn't install youtube-dl into your computer yet, please turn to [youtube-dl](github.com/ytdl-org/youtube-dl/releases/latest) to download "youtube-dl.exe" and turn to [FFmpeg](https://ffmpeg.zeranoe.com/builds/) to download ffmpeg.
 
 ###### Mac OS and Linux desktop:
 
