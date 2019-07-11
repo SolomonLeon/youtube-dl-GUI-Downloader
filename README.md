@@ -1,7 +1,11 @@
 # youtube-dl-gui-downloader
+![icon](icon.ico)
+
 A youtube-dl GUI tool build with tkinter, which is easy to use.
 
 一个使用tkinter模块构建的，易用的轻量级youtube-dl图形化工具。
+
+![Screenshot](screenshot.png)
 
 # Download
 
