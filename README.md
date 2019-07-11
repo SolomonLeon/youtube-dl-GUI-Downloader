@@ -1,5 +1,4 @@
 # youtube-dl-gui-downloader
-![icon](icon.ico)
 
 A youtube-dl GUI tool build with tkinter, which is easy to use.
 
@@ -45,3 +44,4 @@ If you failed with error "10061" or "10060", please check the "proxy setting" in
 you can use command "start inetcpl.cpl" (windows) to view your system proxy setting.
 
 I currently do not provide any proxy services.
+![icon](icon.ico)
