@@ -7,7 +7,7 @@ A youtube-dl GUI tool build with tkinter, which is easy to use.
 ![Screenshot](screenshot.png)
 
 # Download
-
+![icon](icon.ico)
 #### Sharing is not an excuse for piracy.
 
 ###### Windows:
@@ -44,4 +44,3 @@ If you failed with error "10061" or "10060", please check the "proxy setting" in
 you can use command "start inetcpl.cpl" (windows) to view your system proxy setting.
 
 I currently do not provide any proxy services.
-![icon](icon.ico)
