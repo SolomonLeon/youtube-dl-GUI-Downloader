@@ -40,7 +40,7 @@ pip install pyperclip
 If you have any idea, please send me by pull request, or issues. Enjoy your coding trip!
 
 # Notes
-If you failed with error "10061" or "10060", please check the "proxy setting" in "Menu".
-you can use command "start inetcpl.cpl" (windows) to view your system proxy setting.
+If you failed with error "10061" or "10060", please edit the "proxy setting" in "Menu".
+You can use command "start inetcpl.cpl" (windows) to view your system proxy setting.
 
 I currently do not provide any proxy services.
