@@ -17,9 +17,9 @@ If you didn't install youtube-dl into your computer yet, please turn to [youtube
 
 ###### Mac OS and Linux desktop:
 
-SORRY, I haven't build special version for you :-(
+SORRY, I haven't build special version for you because I don't have any of these devices :-(
 
-But you can download my Source code and build them! :-D See "Develop"
+But you can download my Source code and run them! :-D See "Develop"
 
 # Develop
 
