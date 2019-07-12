@@ -1,4 +1,4 @@
-# youtube-dl-gui-downloader
+# youtube-dl-GUI-downloader
 
 A youtube-dl GUI tool build with tkinter, which is easy to use.
 
